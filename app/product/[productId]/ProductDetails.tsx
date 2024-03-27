@@ -34,7 +34,7 @@ const Horizontal = () => {
 };
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
-  const {cartTotalQty} = useCart();
+  const {handleAddProductToCart, cartProducts} = useCart()
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: product.id,
     name: product.name,
@@ -46,7 +46,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     price: product.price,
   });
 
-  // console.log(cartProduct);
+  console.log(cartProducts);
   // console.log(cartTotalQty);
 
   const productRating =
@@ -117,7 +117,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         ></SetQuantity>
         <Horizontal></Horizontal>
         <div className="max-w-[300px]">
-          <Button label="Add To Cart" onClick={() =>{}}></Button>
+          <Button label="Add To Cart" onClick={() =>handleAddProductToCart(cartProduct)}></Button>
         </div>
       </div>
     </div>
