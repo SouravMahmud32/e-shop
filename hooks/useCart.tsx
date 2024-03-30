@@ -3,14 +3,14 @@ import { createContext, useCallback, useContext, useState } from "react";
 
 type CartContextType = {
     cartTotalQty: number;
-    cartProducts: CartProductType | null;
+    cartProducts: CartProductType[] | null;
     handleAddProductToCart: (product: CartProductType) => void;
 }
 
 export const CartContext = createContext<CartContextType | null>(null);
 
 interface Props{
-    [propsName: string]: any;
+    [propName: string]: any;
 }
 
 export const CartContextProvider = (props: Props) =>{
