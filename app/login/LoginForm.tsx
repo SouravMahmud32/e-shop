@@ -6,6 +6,9 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../components/Button";
 import Link from "next/link";
 import {AiOutlineGoogle} from 'react-icons/ai'
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,9 +20,22 @@ const LoginForm = () => {
     defaultValues: { email: "", password: "" },
   });
 
+  const router = useRouter()
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    console.log(data);
+    signIn('credentials', {...data, redirect: false}).then((callback) =>{
+      if (callback?.ok) {
+        router.push("/cart");
+        router.refresh();
+        toast.success("Logged In");
+      }
+
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+      setIsLoading(false)
+    })
   };
 
   return (
