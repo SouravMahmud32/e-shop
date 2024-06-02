@@ -49,7 +49,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     price: product.price,
   });
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     setIsProductInCart(false);
@@ -123,15 +123,22 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         <Horizontal></Horizontal>
         {isProductInCart ? (
           <>
-          <p className="mb-2 text-slate-500 flex items-center gap-1">
-            <MdCheckCircle className=" text-teal-400" size={20}></MdCheckCircle>
-            <span>Product added to cart</span>
-          </p>
-          <div className="max-w-[300px]">
-            <Button label="View Cart" outline onClick={() =>{
-              router.push('/cart')
-            }}></Button>
-          </div>
+            <p className="mb-2 text-slate-500 flex items-center gap-1">
+              <MdCheckCircle
+                className=" text-teal-400"
+                size={20}
+              ></MdCheckCircle>
+              <span>Product added to cart</span>
+            </p>
+            <div className="max-w-[300px]">
+              <Button
+                label="View Cart"
+                outline
+                onClick={() => {
+                  router.push("/cart");
+                }}
+              ></Button>
+            </div>
           </>
         ) : (
           <>
