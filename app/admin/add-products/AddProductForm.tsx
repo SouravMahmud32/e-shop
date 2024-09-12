@@ -20,6 +20,8 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { error } from "console";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export type ImageType = {
   color: string;
@@ -33,6 +35,7 @@ export type UploadedImageType = {
 };
 
 const AddProductForm = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageType[] | null>();
   const [isProductCreated, setIsProductCreated] = useState(false);
@@ -140,6 +143,23 @@ const AddProductForm = () => {
         return toast.error("Error Hnadling image uploads");
       }
     };
+
+    await handleImageUploads();
+    const productData = { ...data, images: uploadedImages };
+
+    axios
+      .post("/api/product", productData)
+      .then(() => {
+        toast.success("Product Created...");
+        setIsProductCreated(true);
+        router.refresh();
+      })
+      .catch((error) => {
+        toast.error("Something went wrong saving product to db");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const category = watch("category");
