@@ -1,9 +1,16 @@
+import { IconType } from "react-icons";
 
+interface StatusProps{
+    text: string,
+    icon: IconType,
+    bg: string,
+    color: string
+}
 
-const Status = () => {
+const Status:React.FC<StatusProps> = ({text, icon: Icon, bg, color}) => {
     return (
-        <div>
-            
+        <div className={`${bg} ${color} px-1 rounded flex items-center gap-1`}>
+            {text} <Icon size={15}></Icon>
         </div>
     );
 };

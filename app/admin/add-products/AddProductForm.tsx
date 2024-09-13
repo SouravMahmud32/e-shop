@@ -19,7 +19,6 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { error } from "console";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -229,7 +228,7 @@ const AddProductForm = () => {
         required
       ></TextArea>
       <CustomCheckBox
-        id=" inStock"
+        id="inStock"
         register={register}
         label="This Product is in stock"
       ></CustomCheckBox>
