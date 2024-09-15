@@ -1,12 +1,22 @@
 "use client";
 
+import ActionBtn from "@/app/components/ActionBtn";
 import Heading from "@/app/components/Heading";
 import Status from "@/app/components/Status";
 import { formatPrice } from "@/utils/formatPrice";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Product } from "@prisma/client";
-import React from "react";
-import { MdClose, MdDone } from "react-icons/md";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import React, { useCallback } from "react";
+import toast from "react-hot-toast";
+import {
+  MdCached,
+  MdClose,
+  MdDelete,
+  MdDone,
+  MdRemoveRedEye,
+} from "react-icons/md";
 
 interface ManageProductsClientProps {
   products: Product[];
@@ -15,6 +25,7 @@ interface ManageProductsClientProps {
 const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
   products,
 }) => {
+  const router = useRouter();
   let rows: any = [];
   if (products) {
     rows = products.map((product) => {
@@ -76,12 +87,39 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
       headerName: "Actions",
       width: 200,
       renderCell: (params) => {
-        return <div>Actions</div>;
+        return (
+          <div className=" flex justify-between gap-4 w-full">
+            <ActionBtn
+              icon={MdCached}
+              onClick={() => {
+                handleToggleStock(params.row.id, params.row.inStock);
+              }}
+            ></ActionBtn>
+            <ActionBtn icon={MdDelete} onClick={() => {}}></ActionBtn>
+            <ActionBtn icon={MdRemoveRedEye} onClick={() => {}}></ActionBtn>
+          </div>
+        );
       },
     },
   ];
 
   const paginationModel = { page: 0, pageSize: 9 };
+
+  const handleToggleStock = useCallback((id: string, inStock: boolean) => {
+    axios
+      .put("/api/product", {
+        id,
+        inStock: !inStock,
+      })
+      .then((res) => {
+        toast.success("Product status changed!");
+        router.refresh();
+      })
+      .catch((err) => {
+        toast.error("Oops! Something went wrong!");
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className=" max-w-[1150px] m-auto text-xl">
@@ -96,6 +134,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
           pageSizeOptions={[9, 20]}
           checkboxSelection
           sx={{ border: 0 }}
+          disableRowSelectionOnClick
         />
       </div>
     </div>

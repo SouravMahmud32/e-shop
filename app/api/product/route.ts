@@ -1,31 +1,46 @@
+import { getCurrentUser } from "@/actions/getCurrentUser";
+import prisma from "@/libs/prismadb";
+import { NextResponse } from "next/server";
 
-import { getCurrentUser } from '@/actions/getCurrentUser';
-import prisma from '@/libs/prismadb';
-import {NextResponse} from 'next/server';
+export async function POST(request: Request) {
+  const currentUser = await getCurrentUser();
 
+  if (!currentUser || currentUser.role !== "ADMIN") {
+    return NextResponse.error;
+  }
 
-export async function POST(request: Request){
-    const currentUser = await getCurrentUser();
+  const body = await request.json();
+  const { name, description, price, brand, category, inStock, images } = body;
 
-    if (!currentUser || currentUser.role !== 'ADMIN') {
-        return NextResponse.error
-    }
+  const product = await prisma.product.create({
+    data: {
+      name,
+      description,
+      price: parseFloat(price),
+      brand,
+      category,
+      inStock,
+      images,
+    },
+  });
 
-    const body = await request.json()
-    const {name, description, price, brand, category, inStock, images} = body;
+  return NextResponse.json(product);
+}
 
-    const product = await prisma.product.create({
-        data: {
-            name,
-            description,
-            price: parseFloat(price),
-            brand,
-            category,
-            inStock,
-            images
-        }
-    })
+export async function PUT(request: Request) {
+  const currentUser = await getCurrentUser();
 
-    return NextResponse.json(product)
+  if (!currentUser || currentUser.role !== "ADMIN") {
+    return NextResponse.error;
+  }
 
+  const body = await request.json();
+  const { id, inStock } = body;
+
+  const product = await prisma.product.update({
+    where: { id: id },
+    data: { inStock },
+  });
+
+  return NextResponse.json(product);
 }
