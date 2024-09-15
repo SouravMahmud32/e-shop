@@ -98,10 +98,18 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
                 handleToggleStock(params.row.id, params.row.inStock);
               }}
             ></ActionBtn>
-            <ActionBtn icon={MdDelete} onClick={() => {
-                handleDelete(params.row.id, params.row.images)
-            }}></ActionBtn>
-            <ActionBtn icon={MdRemoveRedEye} onClick={() => {}}></ActionBtn>
+            <ActionBtn
+              icon={MdDelete}
+              onClick={() => {
+                handleDelete(params.row.id, params.row.images);
+              }}
+            ></ActionBtn>
+            <ActionBtn
+              icon={MdRemoveRedEye}
+              onClick={() => {
+                router.push(`product/${params.row.id}`);
+              }}
+            ></ActionBtn>
           </div>
         );
       },
@@ -145,16 +153,16 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
 
     await handleImageDelete();
 
-    axios.delete(`/api/product/${id}`).then(
-        (res) => {
-            toast.success("Product Deleted!");
-            router.refresh();
-          }
-    ).catch((err) => {
+    axios
+      .delete(`/api/product/${id}`)
+      .then((res) => {
+        toast.success("Product Deleted!");
+        router.refresh();
+      })
+      .catch((err) => {
         toast.error("Failed to Delete Product!");
         console.log(err);
       });
-
   }, []);
 
   return (
