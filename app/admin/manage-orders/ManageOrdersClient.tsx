@@ -37,7 +37,7 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
         amount: formatPrice(order.amount / 100),
         paymentStatus: order.status,
         date: moment(order.createdAt).fromNow(),
-        deliverStatus: order.deliveryStatus,
+        deliveryStatus: order.deliveryStatus,
       };
     });
   }
@@ -85,27 +85,27 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
     },
 
     {
-      field: "deliverStatus",
+      field: "deliveryStatus",
       headerName: "Delivery Status",
       width: 130,
       renderCell: (params) => {
         return (
           <div>
-            {params.row.deliverStatus === "pending" ? (
+            {params.row.deliveryStatus === "pending" ? (
               <Status
                 text="pending"
                 icon={MdAccessTimeFilled}
                 bg=" bg-slate-200"
                 color="text-slate-700"
               />
-            ) : params.row.deliverStatus === "dispatched" ? (
+            ) : params.row.deliveryStatus === "dispatched" ? (
               <Status
                 text="dispatched"
                 icon={MdDeliveryDining}
                 bg=" bg-purple-200"
                 color="text-purple-700"
               />
-            ) : params.row.deliverStatus === "delivered" ? (
+            ) : params.row.deliveryStatus === "delivered" ? (
               <Status
                 text="delivered"
                 icon={MdDone}
@@ -163,7 +163,7 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
     axios
       .put("/api/order", {
         id,
-        deliverStatus: "dispatched",
+        deliveryStatus: "dispatched",
       })
       .then((res) => {
         toast.success("Order Dispatched");
@@ -179,7 +179,7 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
     axios
       .put("/api/order", {
         id,
-        deliverStatus: "delivered",
+        deliveryStatus: "delivered",
       })
       .then((res) => {
         toast.success("Order Delivered");
