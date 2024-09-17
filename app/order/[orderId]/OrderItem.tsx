@@ -22,13 +22,15 @@ const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
           ></Image>
         </div>
         <div className=" flex flex-col gap-1">
-            <div>{truncateText(item.name)}</div>
-            <div>{item.selectedImg.color}</div>
+          <div>{truncateText(item.name)}</div>
+          <div>{item.selectedImg.color}</div>
         </div>
       </div>
       <div className=" justify-self-center">{formatPrice(item.price)}</div>
       <div className=" justify-self-center">{item.quantity}</div>
-      <div className=" justify-self-center font-semibold">${(item.price * item.quantity).toFixed(2)}</div>
+      <div className=" justify-self-center font-semibold">
+        ${(item.price * item.quantity).toFixed(2)}
+      </div>
     </div>
   );
 };

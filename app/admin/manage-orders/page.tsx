@@ -4,7 +4,7 @@ import NullData from "@/app/components/NullData";
 import ManageOrdersClient from "./ManageOrdersClient";
 import getOrders from "@/actions/getOrders";
 
-const ManageProducts = async () => {
+const ManageOrders = async () => {
   const orders = await getOrders();
   const currentUser = await getCurrentUser();
 
@@ -21,4 +21,4 @@ const ManageProducts = async () => {
   );
 };
 
-export default ManageProducts;
+export default ManageOrders;

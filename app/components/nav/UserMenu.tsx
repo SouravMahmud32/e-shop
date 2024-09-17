@@ -35,7 +35,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <div className=" absolute rounded-md shadow-md w-[170px] bg-white overflow-hidden right-0 top-12 flex flex-col text-sm cursor-pointer">
             {currentUser ? (
               <div>
-                <Link href="/oders">
+                <Link href="/orders">
                   <MenuItem onclick={toggleOpen}>Your Orders</MenuItem>
                 </Link>
                 <Link href="/admin">
