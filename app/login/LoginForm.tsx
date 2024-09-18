@@ -61,7 +61,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
         label="Continue With Google"
         icon={AiOutlineGoogle}
         outline
-        onClick={() => {signIn('google')}}
+        onClick={() => {
+          signIn("google");
+        }}
       ></Button>
       <hr className=" bg-slate-300 w-full h-px" />
 
@@ -88,7 +90,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
       ></Button>
       <p className=" text-sm text-center">
         Don't have an account?{" "}
-        <Link className=" underline" href="/register">
+        <Link className="underline" href="/register">
           Sign Up
         </Link>
       </p>
