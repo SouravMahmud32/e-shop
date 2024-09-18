@@ -31,9 +31,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   useEffect(() => {
     if (currentUser) {
       router.push("/cart");
-      router.refresh();
     }
-  }, []);
+  }, [currentUser, router]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -50,7 +49,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         }).then((callback) => {
           if (callback?.ok) {
             router.push("/cart");
-            router.refresh();
             toast.success("Logged In");
           }
 
@@ -71,13 +69,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
 
   return (
     <>
-      <Heading title="Sign up for E-shop"></Heading>
+      <Heading title="Sign up for E-shop" />
       <Button
         label="Continue With Google"
         icon={AiOutlineGoogle}
         outline
-        onClick={() => {signIn('google')}}
-      ></Button>
+        onClick={() => signIn("google")}
+      />
       <hr className=" bg-slate-300 w-full h-px" />
       <Input
         id="name"
@@ -86,7 +84,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         register={register}
         errors={errors}
         required
-      ></Input>
+      />
       <Input
         id="email"
         label="Email"
@@ -94,7 +92,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         register={register}
         errors={errors}
         required
-      ></Input>
+      />
       <Input
         id="password"
         label="Password"
@@ -103,11 +101,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         errors={errors}
         required
         type="password"
-      ></Input>
+      />
       <Button
         label={isLoading ? "Loading" : "Sign Up"}
         onClick={handleSubmit(onSubmit)}
-      ></Button>
+      />
       <p className=" text-sm text-center">
         Already have an account?{" "}
         <Link className=" underline" href="/login">
