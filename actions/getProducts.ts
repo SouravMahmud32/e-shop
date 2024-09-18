@@ -8,48 +8,44 @@ export interface IProductParams {
 export default async function getProducts(params: IProductParams) {
   try {
     const { category, searchTerm } = params;
-    let searchString = searchTerm;
-
-    if (!searchTerm) {
-      searchString = "";
-    }
-
     let query: any = {};
 
+    // If category is provided, add it to the query
     if (category) {
       query.category = category;
     }
 
-    const products = await prisma.product.findMany({
-      where: {
-        ...query,
-        OR: [
-          {
-            name: {
-              contains: searchString,
-              mode: "insensitive",
-            },
-            description: {
-              contains: searchString,
-              mode: "insensitive",
-            },
+    // If a search term is provided, use it to search in 'name' or 'description'
+    if (searchTerm) {
+      query.OR = [
+        {
+          name: {
+            contains: searchTerm,
+            mode: "insensitive", // Case insensitive search
           },
-        ],
-      },
+        },
+        {
+          description: {
+            contains: searchTerm,
+            mode: "insensitive",
+          },
+        },
+      ];
+    }
+
+    const products = await prisma.product.findMany({
+      where: query,
       include: {
         reviews: {
           include: {
             user: true,
-          },
-          orderBy: {
-            createdDate: "desc",
           },
         },
       },
     });
 
     return products;
-  }catch (error: any) {
-    throw new Error(error);
+  } catch (error: any) {
+    throw new Error(error.message || "Failed to fetch products");
   }
 }
