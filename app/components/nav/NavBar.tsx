@@ -21,7 +21,7 @@ const NavBar = async () => {
               className={`${redressed.className} font-bold text-2xl`}
               href="/"
             >
-              E-Shop
+              Mambo-Shop
             </Link>
             <div className="hidden md:block">
               <SearchBar />
