@@ -5,17 +5,17 @@ import { NextResponse } from "next/server";
 export async function PUT(request: Request) {
   const currentUser = await getCurrentUser();
 
-  if(!currentUser) return NextResponse.error();
+  if (!currentUser) return NextResponse.error();
 
   if (currentUser.role !== "ADMIN") {
-    return NextResponse.error;
+    return NextResponse.error();  // <-- Fix: add parentheses to call the error function
   }
 
   const body = await request.json();
   const { id, deliveryStatus } = body;
 
   const order = await prisma.order.update({
-    where: { id: id },
+    where: { id },
     data: { deliveryStatus },
   });
 

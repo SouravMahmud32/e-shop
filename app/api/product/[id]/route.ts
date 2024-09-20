@@ -10,7 +10,7 @@ export async function DELETE(
   if(!currentUser) return NextResponse.error();
 
   if (currentUser.role !== "ADMIN") {
-    return NextResponse.error;
+    return NextResponse.error();
   }
 
   const product = await prisma?.product.delete({
